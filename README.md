@@ -79,11 +79,25 @@ cd ../client-node && npm install
 # Python - setup venv with SDK installed
 cd ../client-python && python3 -m venv .venv && .venv/bin/pip install -e .
 
-# Java - build shaded JAR
+# Java - build local SDK jar, install to local Maven repo, and build shaded JAR
+cd ../client-java && ./gradlew jar
+cd ../client-java && mvn install:install-file -Dfile=build/libs/vaultsandbox-client-<version>.jar -DgroupId=com.vaultsandbox -DartifactId=client -Dversion=<version> -Dpackaging=jar -DgeneratePom=true
 cd ../client-java/scripts/testhelper && mvn package
 
 # .NET - build (runs via dotnet run)
 cd ../client-dotnet/scripts/Testhelper && dotnet build
+```
+
+Or run all SDK builds from this repo:
+
+```bash
+make build-testhelpers
+```
+
+If Maven cached a previous "not found" error for the local SDK, clear the cache:
+
+```bash
+rm -f ~/.m2/repository/com/vaultsandbox/client/*/*.lastUpdated
 ```
 
 ## Usage

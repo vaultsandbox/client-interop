@@ -1,4 +1,4 @@
-.PHONY: install test test-verbose test-smoke test-standard test-full clean clean-exports help
+.PHONY: install build-testhelpers test test-verbose test-smoke test-standard test-full clean clean-exports help
 
 # Optional: append --keep-inboxes by running: make test-smoke KEEP_INBOXES=1
 PYTEST_OPTS := $(if $(KEEP_INBOXES),--keep-inboxes,)
@@ -9,6 +9,7 @@ help:
 	@echo ""
 	@echo "Targets:"
 	@echo "  install        Install Python dependencies"
+	@echo "  build-testhelpers  Build SDK testhelpers across repos"
 	@echo "  test           Run all interop tests"
 	@echo "  test-verbose   Run tests with verbose output"
 	@echo "  test-smoke     Quick smoke test (~5 tests)"
@@ -30,6 +31,9 @@ help:
 install:
 	python3 -m venv .venv
 	.venv/bin/pip install -r requirements.txt
+
+build-testhelpers:
+	./scripts/build_testhelpers.sh
 
 test:
 	PYTHONPATH=tests .venv/bin/pytest $(PYTEST_OPTS)
