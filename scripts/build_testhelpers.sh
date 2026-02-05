@@ -36,7 +36,7 @@ fi
 
 jar_version=""
 if [ -f "$CLIENT_JAVA_PATH/gradle.properties" ]; then
-  jar_version="$(grep -E '^version=' "$CLIENT_JAVA_PATH/gradle.properties" | head -n1 | cut -d= -f2- | tr -d '[:space:]')"
+  jar_version="$(grep -E '^version=' "$CLIENT_JAVA_PATH/gradle.properties" | head -n1 | cut -d= -f2- | tr -d '[:space:]' || true)"
 fi
 if [ -z "$jar_version" ]; then
   jar_version="$(grep -E "^version\\s*=" "$CLIENT_JAVA_PATH/build.gradle" | head -n1 | sed -E "s/.*version\\s*=\\s*['\\\"]([^'\\\"]+)['\\\"].*/\\1/")"
